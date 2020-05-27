@@ -1,0 +1,19 @@
+{
+  "name": "convert-to-xsl",
+  "version": "1.0.0",
+  "description": "Project to convert formatted text to xsl",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gianvallejos92/convert-to-xsl.git"
+  },
+  "author": "Gian Vallejos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gianvallejos92/convert-to-xsl/issues"
+  },
+  "homepage": "https://github.com/gianvallejos92/convert-to-xsl#readme"
+}
