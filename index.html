@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convert to XSL</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-        #text-editor{
-          height: 750px; 
-          width: 70%; 
-          border: 1px solid black;
-          font-family:  'Roboto', sans-serif;
-        }
-    </style>
+    <title>Convert Disclosure</title>
+    <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
-    <div id="app"></div>
-    <div id="text-editor" contenteditable="true"></div>
-    <script src="src/index.js"></script>
+  <div class="wrapper">
+      <div id="editor" class="text-editor" contenteditable="true"></div>
+      <div id="result" class="text-editor" contenteditable="true"></div>
+  </div>
+  <div class="wrapper-btn">
+      <button id="saveBtn">Auto Save</button>
+      <button id="convertBtn">Convert</button>
+      <button id="testBtn">Test</button>
+  </div>
+  <script src="index.js"></script>
 </body>
 </html>
