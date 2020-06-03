@@ -1,19 +1,39 @@
+body {
+    position: relative;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.title {
+    padding: 15px;
+    text-align: center;
+    width: auto;
+    background:#195695;
+    color: #fff;
+}
+
 .wrapper{
     display: flex;
     justify-content: space-between;
+    margin: 30px 15px;
   }
   
+.text-input-wrapper{
+    width: 48%;
+}
+
   .text-editor{
-      height: 250px;
+      height: 75vh;
       border: 2px solid black;
       padding: 10px;
-      font-family: Arial, Helvetica, sans-serif;
       overflow-y: auto;
-      width: 48%;
+    
   }
   
   .wrapper-btn{
-      padding: 30px 0px;
+      padding: 20px 0px;
       text-align: center;
   }
   

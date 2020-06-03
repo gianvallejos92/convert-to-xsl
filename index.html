@@ -4,18 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convert Disclosure</title>
-    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="./src/css/style.css">
 </head>
 <body>
+  <header>
+    <div class="title">
+        <h1>CONVERTER</h1>
+    </div>
+  </header>
   <div class="wrapper">
-      <div id="editor" class="text-editor" contenteditable="true"></div>
-      <div id="result" class="text-editor" contenteditable="true"></div>
+      <div class="text-input-wrapper">
+        <h3>Input:</h3>
+        <div id="editor" class="text-editor" contenteditable="true"></div>
+      </div>
+      <div class="text-input-wrapper">
+        <h3>Output:</h3>
+        <div id="result" class="text-editor" contenteditable="true"></div>
+      </div>
   </div>
   <div class="wrapper-btn">
+      <button id="cleanTagsBtn">Generate Clean Tags</button>
+      <button id="resetInputBtn">Reset Input</button>
+      <!--
       <button id="saveBtn">Auto Save</button>
       <button id="convertBtn">Convert</button>
       <button id="testBtn">Test</button>
+      -->
   </div>
-  <script src="index.js"></script>
+  <script type="text/javascript" src="./src/classes/TagsCleaner.js"></script>
+  <script type="text/javascript" src="./src/index.js"></script>
 </body>
 </html>
