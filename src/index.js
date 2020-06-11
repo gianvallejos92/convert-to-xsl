@@ -2,6 +2,7 @@ const cleanTagsBtn = document.getElementById('cleanTagsBtn');
 const tagCleaner = new TagsCleaner();
 cleanTagsBtn.addEventListener('click', () => {
   const inputText = document.getElementById('editor').innerHTML;
+  console.log(`Input text: ${inputText}`)
   const resultText = document.getElementById('result');
   tagCleaner.initializeTagsCleaner();
   const textCleaned = tagCleaner.showTagsResult(inputText);
