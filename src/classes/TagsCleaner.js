@@ -72,7 +72,7 @@ class TagsCleaner {
       if (inputText[this.charInd] !== '<') {
         if (inputText[this.charInd] === '>') {
           breakLoop = true;
-        } else if (this.isOpenHtmlComment(this.charInd, inputText)) {
+        } else if (this.isOpenHtmlComment(inputText)) {
           this.charInd = this.avoidCharsUntilFindTag('-->', inputText);
           breakLoop = true;
         } else {
@@ -98,24 +98,19 @@ class TagsCleaner {
     return curCharInd;
   }
 
-  static isOpenHtmlComment(charInd, inputText) {
+  isOpenHtmlComment(inputText) {
     let isOpenComment = false;
-    if (inputText.substr(charInd, 3) === '!--') {
+    if (inputText.substr(this.charInd, 3) === '!--') {
       isOpenComment = true;
     }
     return isOpenComment;
   }
 
-  static isCloseHtmlComment(charInd, inputText) {
-    let isCloseComment = false;
-    if (inputText.substr(charInd, 3) === '-->') isCloseComment = true;
-    return isCloseComment;
-  }
-
-  static isHtmlInputMatchTag(charInd, inputText, tag) {
+  isHtmlInputMatchTag(inputText, tag) {
+    const curCharInd = this.charInd;
     let isHtmlOpenTag = false;
-    if (charInd < inputText.length) {
-      if (inputText.substr(charInd, tag.length) === tag) isHtmlOpenTag = true;
+    if (curCharInd < inputText.length) {
+      if (inputText.substr(curCharInd, tag.length) === tag) isHtmlOpenTag = true;
     }
     return isHtmlOpenTag;
   }
