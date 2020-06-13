@@ -4,10 +4,6 @@ class TagsCleaner {
     this.charInd = 0;
     this.allStrings = [];
     this.tagsToAvoid = ['', 'a', 'span', 'o:p'];
-    this.tagsToReplace = {
-      key: ['a'],
-      value: ['basic-link'],
-    };
     this.wordsToReplace = {
       key: ['&nbsp;\n', '\n', '&nbsp; ', '{! table01 }'],
       value: [' ', ' ', '&nbsp;', '{! is working fine }'],
