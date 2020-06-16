@@ -15,13 +15,12 @@ resetInputBtn.addEventListener('click', () => {
   inputText.focus();
 });
 
-const convertXslBtn = document.getElementById('convertXslBtn');
-const convertToXsl = new ConvertToXsl();
-convertXslBtn.addEventListener('click', () => {
+const htmlToXslBtn = document.getElementById('htmlToXslBtn');
+const htmlToXsl = new HtmlToXsl();
+htmlToXslBtn.addEventListener('click', () => {
   const inputText = document.getElementById('editor').innerHTML;
-  //console.log(`InputText: ${inputText}`);
   const resultText = document.getElementById('result');
-  convertToXsl.initializeTagsCleaner();
-  const textConvertedXsl = convertToXsl.showStringConvertedXsl(inputText);
+  htmlToXsl.initializeTagsCleaner();
+  const textConvertedXsl = htmlToXsl.showStringHtmlToXsl(inputText);
   resultText.innerText = textConvertedXsl;
 });
