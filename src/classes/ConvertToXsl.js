@@ -2,30 +2,53 @@ class ConvertToXsl extends TagsCleaner {
   constructor() {
     super();
     this.breakLineSymbol = '\n';
-    this.tagsToAvoid = ['', 'a', 'span', 'o:p'];
+    this.tagsToAvoid = ['', 'a', 'span', 'o:p', 'br'];
+    this.wordsToReplace = {
+      key: ['&nbsp;\n', '\n', '&nbsp; ', '{! table01 }'],
+      value: [' ', ' ', '&nbsp;', '{! is working fine }'],
+    };
     this.tagsToReplace = {
       key: [
-        '<p>',
-        '</p>',
+        '<p>', '</p>',
         '<b><u>',
-        '</u></b>',
-        '<b>',
-        '</b>',
-        '<u>',
-        '</u>',
-        '&nbsp;',
+        '<u><strong>', '</strong></u>',
+        '<strong><u>', '</u></strong>',
+        '</u></b>', '<b>',
+        '</b>', '<u>',
+        '</u>', '&nbsp;', '<strong>', '</strong>',
       ],
       value: [
-        '<block>',
-        '</block>',
+        '<block>', '</block>',
         '<inline font-weight="bold" text-decoration="underline">',
-        '</inline>',
-        '<inline font-weight="bold">',
-        '</inline>',
-        '<inline text-decoration="underline">',
-        '</inline>',
-        '',
+        '<inline font-weight="bold" text-decoration="underline">', '</inline>',
+        '<inline font-weight="bold" text-decoration="underline">', '</inline>',
+        '</inline>', '<inline font-weight="bold">',
+        '</inline>', '<inline text-decoration="underline">',
+        '</inline>', '', '<inline font-weight="bold">', '</inline>',
       ],
+    };
+    this.symbolInitial = '<p><!--if!supportLists-->';
+    this.symbolToReplace = `${this.breakLineSymbol}
+                            <list-block space-before="4mm" space-after="4mm">
+                              <list-item>
+                                <list-item-label>
+                                  <block>`;
+    this.endIfSymbol = '<!--endif-->';
+    this.endIfToReplace = `</block>
+                           </list-item-label>
+                           <list-item-body>
+                             <block text-indent="14mm">`;
+    this.closeP = '</p>';
+    this.closePToReplace = `</block>
+                                </list-item-body>
+                              </list-item>
+                            </list-block>${this.breakLineSymbol}`;
+    this.replaceFromPosition = (inputText, srtToReplace, strReplaced, position) => {
+      let tmpResult = inputText;
+      const from = tmpResult.substr(0, position);
+      const to = tmpResult.substr(position + srtToReplace.length);
+      tmpResult = from + strReplaced + to;
+      return tmpResult;
     };
   }
 
@@ -120,35 +143,27 @@ class ConvertToXsl extends TagsCleaner {
 
   generateBlocks(inputText) {
     let tmpResult = this.getInputTagsCleaned(inputText);
-    const symbolInitial = '<p><!--if!supportLists-->';
-    const symbolToReplace = `${this.breakLineSymbol}<list-block><list-item><list-item-label><block>${this.breakLineSymbol}`;
-    const endIfSymbol = '<!--endif-->';
-    const endIfToReplace = `${this.breakLineSymbol}</block> </list-item-label><list-item body><block>${this.breakLineSymbol}`;
-    const closeP = '</p>';
-    const closePToReplace = `${this.breakLineSymbol}</block></list-item-body></list-item></list-block>${this.breakLineSymbol}`;
-    let curPosition = tmpResult.indexOf(symbolInitial);
+    let curPosition = tmpResult.indexOf(this.symbolInitial);
+    let strEndIf = '';
+    let strCloseP = '';
     while (curPosition !== -1) {
-      tmpResult = tmpResult.replace(symbolInitial, symbolToReplace);
+      tmpResult = tmpResult.replace(this.symbolInitial, this.symbolToReplace);
       while (curPosition < tmpResult.length) {
-        const strEndIf = tmpResult.substr(curPosition, endIfSymbol.length);
-        const strCloseP = tmpResult.substr(curPosition, closeP.length);
-        if (strEndIf === endIfSymbol) {
-          const endIfToReplaceLength = endIfToReplace.length;
-          const from = tmpResult.substr(0, curPosition);
-          const to = tmpResult.substr(curPosition + endIfSymbol.length);
-          tmpResult = from + endIfToReplace + to;
-          curPosition = curPosition + endIfToReplaceLength;
-        } else if (strCloseP === closeP) {
-          const closePLength = closePToReplace.length;
-          const from = tmpResult.substr(0, curPosition);
-          const to = tmpResult.substr(curPosition + closeP.length);
-          tmpResult = from + closePToReplace + to;
-          curPosition = curPosition + closePLength;
+        strEndIf = tmpResult.substr(curPosition, this.endIfSymbol.length);
+        strCloseP = tmpResult.substr(curPosition, this.closeP.length);
+        if (strEndIf === this.endIfSymbol) {
+          tmpResult = this.replaceFromPosition(tmpResult, this.endIfSymbol,
+            this.endIfToReplace, curPosition);
+          curPosition = curPosition + this.endIfToReplace.length;
+        } else if (strCloseP === this.closeP) {
+          tmpResult = this.replaceFromPosition(tmpResult, this.closeP,
+            this.closePToReplace, curPosition);
+          curPosition = curPosition + this.closePToReplace.length;
           break;
         }
         curPosition++;
       }
-      curPosition = tmpResult.indexOf(symbolInitial);
+      curPosition = tmpResult.indexOf(this.symbolInitial);
     }
     return tmpResult;
   }
@@ -164,6 +179,7 @@ class ConvertToXsl extends TagsCleaner {
   }
 
   showStringConvertedXsl(inputText) {
+    console.log(`InputText: ${inputText}`);
     const inputTagCleaned = this.generateBlocks(inputText);
     console.log(`Cleaned: ${inputTagCleaned}`);
     const resultXslFormatted = this.convertStringToXsL(inputTagCleaned);
