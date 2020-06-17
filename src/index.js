@@ -2,6 +2,7 @@ const cleanTagsBtn = document.getElementById('cleanTagsBtn');
 const tagCleaner = new TagsCleaner();
 cleanTagsBtn.addEventListener('click', () => {
   const inputText = document.getElementById('editor').innerHTML;
+  console.log(`HTML: ${inputText}`);
   const resultText = document.getElementById('result');
   tagCleaner.initializeTagsCleaner();
   const textCleaned = tagCleaner.showTagsResult(inputText);
@@ -12,6 +13,8 @@ const resetInputBtn = document.getElementById('resetInputBtn');
 resetInputBtn.addEventListener('click', () => {
   const inputText = document.getElementById('editor');
   inputText.innerText = '';
+  const resultText = document.getElementById('result');
+  resultText.innerText = '';
   inputText.focus();
 });
 

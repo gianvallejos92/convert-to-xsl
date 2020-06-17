@@ -3,10 +3,40 @@ class TagsCleaner {
     this.curInd = 0;
     this.charInd = 0;
     this.allStrings = [];
+    this.isIndent = false;
     this.tagsToAvoid = ['', 'a', 'span', 'o:p'];
+    this.table1_img_link = '';
     this.wordsToReplace = {
-      key: ['&nbsp;\n', '\n', '&nbsp; ', '{! table01 }'],
-      value: [' ', ' ', '&nbsp;', '{! is working fine }'],
+      key: [
+        '&nbsp;\n',
+        '\n',
+        '&nbsp; ',
+        '{! table01 }',
+      ],
+      value: [
+        ' ',
+        ' ',
+        '&nbsp;',
+        `<img alt="User-added image" data-cke-saved-src="${this.table1_img_link}" src="${this.table1_img_link}">`,
+      ],
+    };
+    this.evaluateIndent = (attributesInput) => {
+      const styleStr = 'style="';
+      const textIndentStr = 'text-indent:';
+      let indChar = attributesInput.indexOf(styleStr);
+      indChar += styleStr.length;
+      if (indChar !== -1) {
+        const tempAttribues = attributesInput.substr(indChar);
+        let posTextIndent = tempAttribues.indexOf(textIndentStr);
+        if (posTextIndent !== -1) {
+          posTextIndent += textIndentStr.length + 1;
+          const endOfValuePosition = tempAttribues.indexOf(';', posTextIndent);
+          const valueOfIndent = tempAttribues.substr(posTextIndent, endOfValuePosition - 1);
+          if (valueOfIndent.indexOf('0cm') === -1) {
+            this.isIndent = true;
+          }
+        }
+      }
     };
   }
 
@@ -26,6 +56,10 @@ class TagsCleaner {
           const currentTag = currentAttributes[0];
           if (!this.isTagToAvoid(`<${currentTag}>`)) {
             this.allStrings += `<${currentTag}>`;
+          }
+          if (this.isIndent) {
+            this.allStrings += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            this.isIndent = false;
           }
         }
       } else {
@@ -70,6 +104,7 @@ class TagsCleaner {
           breakLoop = true;
         } else if (this.isOpenHtmlComment(inputText)) {
           this.charInd = this.avoidCharsUntilFindTag('-->', inputText);
+          this.isIndent = true;
           breakLoop = true;
         } else {
           attributesTemp += inputText[this.charInd];
@@ -79,6 +114,7 @@ class TagsCleaner {
         this.charInd += 1;
       }
     }
+    this.evaluateIndent(attributesTemp);
     return attributesTemp.split(' ');
   }
 
