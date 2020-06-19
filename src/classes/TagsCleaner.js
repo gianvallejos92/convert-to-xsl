@@ -5,7 +5,7 @@ class TagsCleaner {
     this.allStrings = [];
     this.isIndent = false;
     this.tagsToAvoid = ['', 'a', 'span', 'o:p'];
-    this.table1_img_link = '';
+    this.table1_img_link = 'https://tm--c.na109.content.force.com/servlet/servlet.ImageServer?id=0153f000000UbbU&oid=00D41000000eQtd&lastMod=1592422125000';
     this.wordsToReplace = {
       key: [
         '&nbsp;\n',
@@ -58,7 +58,7 @@ class TagsCleaner {
             this.allStrings += `<${currentTag}>`;
           }
           if (this.isIndent) {
-            this.allStrings += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            this.allStrings += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
             this.isIndent = false;
           }
         }
