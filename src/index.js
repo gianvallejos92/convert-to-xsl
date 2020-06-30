@@ -27,3 +27,14 @@ htmlToXslBtn.addEventListener('click', () => {
   const textConvertedXsl = htmlToXsl.showStringHtmlToXsl(inputText);
   resultText.innerText = textConvertedXsl;
 });
+
+const disclosureTestBtn = document.getElementById('disclosureTestBtn');
+const toDisclosure = new ToDisclosure();
+disclosureTestBtn.addEventListener('click', () => {
+  const inputText = document.getElementById('editor').innerHTML;
+  const resultText = document.getElementById('result');
+  toDisclosure.initializeTagsCleaner();
+  const textConvertedToDisclosure = toDisclosure.showStringHtmlToXsl(inputText);
+  resultText.innerText = textConvertedToDisclosure;
+});
+
