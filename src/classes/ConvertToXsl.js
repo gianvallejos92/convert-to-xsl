@@ -16,6 +16,8 @@ class ConvertToXsl extends TagsCleaner {
         '</u></b>', '<b>',
         '</b>', '<u>',
         '</u>', '&nbsp;', '<strong>', '</strong>',
+        '<i>', '</i>',
+        '<em>', '</em>',
       ],
       value: [
         '<block>', '</block>',
@@ -25,6 +27,8 @@ class ConvertToXsl extends TagsCleaner {
         '</inline>', '<inline font-weight="bold">',
         '</inline>', '<inline text-decoration="underline">',
         '</inline>', '', '<inline font-weight="bold">', '</inline>',
+        '<inline font-style="italic">', '</inline>',
+        '<inline font-style="italic">', '</inline>',
       ],
     };
     this.symbolInitial = '<p><!--if!supportLists-->';
